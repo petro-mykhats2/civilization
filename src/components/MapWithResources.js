@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
-import "../MapWithResources.css" // Стилі для компонента
 import resourcePoints from "../data/coordinates.json"
+import "../styles/mapWithResources.scss"
 
 // Координати точок у пікселях на зображенні 1024x1024
 

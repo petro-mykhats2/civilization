@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import MaterialsContainer from "./components/MaterialsContainer" // Виправлено
 import Technologies from "./components/Technologies" // Виправлено
 import MapWithResources from "./components/MapWithResources"
+import "../src/styles/app.scss"
 
 const darkTheme = createTheme({
   palette: {

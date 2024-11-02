@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import "../Technologies.css" // Не забудьте створити файл CSS і підключити його
+import "../styles/technologies.scss"
 
 const Technologies = () => {
   const [checked, setChecked] = useState(false)
@@ -54,8 +54,10 @@ const Technologies = () => {
       </table>
 
       <div className="pagination">
-        <a href="#">&laquo; Previous</a>
-        <a href="#">Next &raquo;</a>
+        <button onClick={() => console.log("Go to previous")}>
+          &laquo; Previous
+        </button>
+        <button onClick={() => console.log("Go to next")}>Next &raquo;</button>{" "}
       </div>
     </div>
   )
