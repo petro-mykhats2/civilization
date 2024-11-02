@@ -1,0 +1,147 @@
+body {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    font-family: var(--joy-fontFamily-body, "Inter", var(--joy-fontFamily-fallback, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"));
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    border: 2px solid #444444;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.thead {
+    background-color: #333333;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 10px;
+    text-align: left;
+    
+}
+
+tbody {
+    background-color: #1a1a1a;
+    /* color: #ca1111; */
+    padding: 10px;
+    
+}
+
+th, td {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #444444;
+    font-family: var(--joy-fontFamily-body, "Inter", var(--joy-fontFamily-fallback, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol")); /* Додаємо шрифт */
+}
+
+th {
+    background-color: #333333;
+    color: #ffffff;
+    font-weight: bold;
+}
+
+td {
+    /* background-color: #2a2a2a; */
+}
+
+tr:hover {
+    background-color: #3a3a3a;
+}
+
+.status-refunded {
+    color: #00bfff;
+}
+
+.status-paid {
+    color: #00ff00;
+}
+
+.status-cancelled {
+    color: #ff0000;
+}
+
+a {
+    color: #00bfff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.pagination a {
+    color: #00bfff;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 2px solid #444444;
+    margin: 0 4px;
+    border-radius: 5px;
+    font-family: var(--joy-fontFamily-body, "Inter", var(--joy-fontFamily-fallback, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol")); /* Додаємо шрифт */
+}
+
+.pagination a:hover {
+    background-color: #444444;
+}
+
+.search-bar, .filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.search-bar input, .filters select {
+    padding: 12px;
+    border: 2px solid #444444;
+    background-color: #2a2a2a;
+    color: #ffffff;
+    border-radius: 5px;
+    font-family: var(--joy-fontFamily-body, "Inter", var(--joy-fontFamily-fallback, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol")); /* Додаємо шрифт */
+}
+
+.search-bar input::placeholder, .filters select {
+    color: #888888;
+}
+
+
+/* From Uiverse.io by SelfMadeSystem */ 
+.container {
+    cursor: pointer;
+}
+
+.container input {
+    display: none;
+}
+
+.container svg {
+    overflow: visible;
+}
+
+.path {
+ 
+    fill: none;
+    stroke: white;
+    stroke-width: 6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
+    stroke-dasharray: 241 9999999;
+    stroke-dashoffset: 0;
+  }
+  
+  .container input:checked ~ svg .path {
+    
+    stroke-dasharray: 70.5096664428711 9999999;
+    stroke-dashoffset: -262.2723388671875;
+  }
+  
+  .item_title {
+    margin-left: 10px;
+  }

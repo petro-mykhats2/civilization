@@ -1,0 +1,30 @@
+.map-container {
+  position: relative;
+  width: 100%; /* Дозволяє карті заповнювати всю ширину */
+  height: 100vh; /* Заповнює всю висоту вікна */
+  overflow: hidden; /* Приховує скролінг */
+}
+
+.map-image {
+  width: 100%; /* Зображення займатиме всю ширину контейнера */
+  height: auto; /* Зберігає пропорції зображення */
+}
+
+.resource-layer {
+  position: absolute; /* Дозволяє точкам з'являтися поверх зображення */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.resource-point {
+  font-size: 8px;
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background-color: red;
+  border-radius: 50%;
+  cursor: pointer;
+  transform: translate(-50%, -50%); /* Центрування точки */
+}
