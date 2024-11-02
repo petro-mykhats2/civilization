@@ -1,38 +1,36 @@
-.App {
-  text-align: center;
+.materials-and-technologies {
+  padding: 20px;
+  /* background-color: #f0f0f0; */
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.materials-and-technologies h2 {
+  color: #333;
+  border-bottom: 2px solid #4a90e2;
+  padding-bottom: 5px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.materials-list,
+.technologies-list {
+  list-style-type: none;
+  padding: 0;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.materials-list li,
+.technologies-list li {
+  /* background-color: #fff; */
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
-.App-link {
-  color: #61dafb;
+.materials-list li strong,
+.technologies-list li strong {
+  color: #4a90e2;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
+.form input {background-color: transparent;
+  color: aliceblue;
+padding: 8px;}
