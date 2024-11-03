@@ -11,8 +11,8 @@ const MapWithResources = () => {
     width: window.innerWidth,
     height: window.innerHeight,
   })
-  const [isModalOpen, setIsModalOpen] = useState(false) // Стейт для контролю видимості модального вікна
-  const [selectedPoint, setSelectedPoint] = useState(null) // Стейт для вибраного ресурсу
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [selectedPoint, setSelectedPoint] = useState(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,26 +23,27 @@ const MapWithResources = () => {
     }
 
     window.addEventListener("resize", handleResize)
-
     return () => {
       window.removeEventListener("resize", handleResize)
     }
   }, [])
 
   const handlePointClick = (point) => {
-    setSelectedPoint(point)
-    setIsModalOpen(true)
+    if (point.id >= 1 && point.id <= 5) {
+      setSelectedPoint(point)
+      setIsModalOpen(true)
+    }
   }
 
   const confirmResearch = () => {
     if (selectedPoint) {
-      dispatch(addResource(selectedPoint)) // Додайте ресурс
-      setIsModalOpen(false) // Закрийте модальне вікно
+      dispatch(addResource(selectedPoint))
+      setIsModalOpen(false)
     }
   }
 
   const cancelResearch = () => {
-    setIsModalOpen(false) // Закрийте модальне вікно без дії
+    setIsModalOpen(false)
   }
 
   const scale = Math.min(
@@ -65,7 +66,9 @@ const MapWithResources = () => {
         {resourcePoints.map((point) => (
           <div
             key={point.id}
-            className="resource-point"
+            className={`resource-point ${
+              point.id >= 1 && point.id <= 5 ? "active" : "inactive"
+            }`}
             style={{
               left: `${(point.x / 1024) * 1000 * scale}px`,
               top: `${(point.y / 1024) * 1000 * scale}px`,
@@ -77,12 +80,11 @@ const MapWithResources = () => {
         ))}
       </div>
 
-      {/* Додайте компонент модального вікна */}
       <ConfirmationModal
         isOpen={isModalOpen}
         onClose={cancelResearch}
         onConfirm={confirmResearch}
-        resourceId={selectedPoint ? selectedPoint.id : null} // Передайте ID ресурсу
+        resourceId={selectedPoint ? selectedPoint.id : null}
       />
     </div>
   )

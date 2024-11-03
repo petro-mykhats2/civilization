@@ -18,13 +18,24 @@
   height: 100%;
 }
 
+
+
 .resource-point {
   font-size: 8px;
   position: absolute;
   width: 7px;
   height: 7px;
-  background-color: red;
   border-radius: 50%;
   cursor: pointer;
-  transform: translate(-50%, -50%); /* Центрування точки */
+  transform: translate(-50%, -50%);
+  transition: background-color 0.3s ease;
+}
+
+.resource-point.active {
+  background-color: red; /* Активний колір */
+}
+
+.resource-point.inactive {
+  background-color: black; /* Неактивний колір */
+  cursor: default; /* Заборона на взаємодію */
 }
