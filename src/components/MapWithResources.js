@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import resourcePoints from "../data/coordinates.json"
 import "../styles/mapWithResources.scss"
 import { addResource } from "../redux/actions"
@@ -7,6 +7,9 @@ import ConfirmationModal from "./ConfirmationModal" // Імпортуйте мо
 
 const MapWithResources = () => {
   const dispatch = useDispatch()
+  const resources = useSelector((state) => state.resources.resources)
+  console.log("uuyuyyuuyuy", resources)
+
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -37,6 +40,17 @@ const MapWithResources = () => {
 
   const confirmResearch = () => {
     if (selectedPoint) {
+      // Перевірка на наявність вже дослідженої області
+      const isAlreadyResearched = resources.some(
+        (resource) => resource.id === selectedPoint.id
+      )
+
+      if (isAlreadyResearched) {
+        alert(`Область з ID ${selectedPoint.id} вже досліджена!`)
+        return // Виходимо з функції, щоб не додавати ресурс
+      }
+
+      // Додаємо новий ресурс, якщо його ще не було
       dispatch(addResource(selectedPoint))
       setIsModalOpen(false)
     }
@@ -72,6 +86,11 @@ const MapWithResources = () => {
             style={{
               left: `${(point.x / 1024) * 1000 * scale}px`,
               top: `${(point.y / 1024) * 1000 * scale}px`,
+              backgroundColor: resources.some(
+                (resource) => resource.id === point.id
+              )
+                ? "blue" // Змінюємо колір на синій, якщо ресурс вже досліджений
+                : "",
             }}
             onClick={() => handlePointClick(point)}
           >
