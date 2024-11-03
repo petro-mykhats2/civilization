@@ -32,10 +32,15 @@ const MapWithResources = () => {
     }
   }, [])
 
-  const allResearchPoints = resources.filter(
+  const allResearchPoints1to5 = resources.filter(
     (resource) => resource.id >= 1 && resource.id <= 5
   )
-  const canActivateNextFields = allResearchPoints.length === 5
+  const canActivateNextFields1to15 = allResearchPoints1to5.length === 5
+
+  const allResearchPoints6to15 = resources.filter(
+    (resource) => resource.id >= 6 && resource.id <= 15
+  )
+  const canActivateNextFields16to30 = allResearchPoints6to15.length === 10 // 10 полів від 6 до 15
 
   const handlePointClick = (point) => {
     const alreadyResearched = resources.some(
@@ -43,10 +48,11 @@ const MapWithResources = () => {
     )
     const isActive =
       (point.id >= 1 && point.id <= 5) ||
-      (canActivateNextFields && point.id >= 6 && point.id <= 15)
+      (canActivateNextFields1to15 && point.id >= 6 && point.id <= 15) ||
+      (canActivateNextFields16to30 && point.id >= 16 && point.id <= 30)
 
     // Блокуємо можливість дослідження неактивних полів
-    if (point.id > 15) {
+    if (point.id > 30) {
       alert("Цю область не можна дослідити!")
       return // Виходимо, нічого не робимо
     }
@@ -105,7 +111,8 @@ const MapWithResources = () => {
           )
           const isActive =
             (point.id >= 1 && point.id <= 5) ||
-            (canActivateNextFields && point.id >= 6 && point.id <= 15)
+            (canActivateNextFields1to15 && point.id >= 6 && point.id <= 15) ||
+            (canActivateNextFields16to30 && point.id >= 16 && point.id <= 30)
 
           return (
             <div
