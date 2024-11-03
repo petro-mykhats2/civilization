@@ -3,12 +3,12 @@ import { useDispatch, useSelector } from "react-redux"
 import resourcePoints from "../data/coordinates.json"
 import "../styles/mapWithResources.scss"
 import { addResource } from "../redux/actions"
-import ConfirmationModal from "./ConfirmationModal" // Імпортуйте модальне вікно
+import ConfirmationModal from "./ConfirmationModal"
 
 const MapWithResources = () => {
   const dispatch = useDispatch()
   const resources = useSelector((state) => state.resources.resources)
-  console.log("uuyuyyuuyuy", resources)
+  console.log("Отримані ресурси з Redux:", resources)
 
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
@@ -16,6 +16,7 @@ const MapWithResources = () => {
   })
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedPoint, setSelectedPoint] = useState(null)
+  const [hoveredResourceName, setHoveredResourceName] = useState(null)
 
   useEffect(() => {
     const handleResize = () => {
@@ -32,29 +33,21 @@ const MapWithResources = () => {
   }, [])
 
   const handlePointClick = (point) => {
-    if (resources.some((resource) => resource.id === point.id)) {
-      // Якщо область вже досліджена, просто не робимо нічого
-      return // Виходимо з функції
+    const alreadyResearched = resources.some(
+      (resource) => resource.id === point.id
+    )
+    if (alreadyResearched) {
+      const resource = resources.find((resource) => resource.id === point.id)
+      alert(`Тут знайдено: ${resource.resourceName}`)
+      return
     }
 
-    // Якщо область не досліджена, відкриваємо модальне вікно
     setSelectedPoint(point)
     setIsModalOpen(true)
   }
 
   const confirmResearch = () => {
     if (selectedPoint) {
-      // Перевірка на наявність вже дослідженої області
-      const isAlreadyResearched = resources.some(
-        (resource) => resource.id === selectedPoint.id
-      )
-
-      if (isAlreadyResearched) {
-        alert(`Область з ID ${selectedPoint.id} вже досліджена!`)
-        return // Виходимо з функції, щоб не додавати ресурс
-      }
-
-      // Додаємо новий ресурс, якщо його ще не було
       dispatch(addResource(selectedPoint))
       setIsModalOpen(false)
     }
@@ -81,26 +74,57 @@ const MapWithResources = () => {
         }}
       />
       <div className="resource-layer">
-        {resourcePoints.map((point) => (
+        {resourcePoints.map((point) => {
+          const alreadyResearched = resources.some(
+            (resource) => resource.id === point.id
+          )
+          const resource = resources.find(
+            (resource) => resource.id === point.id
+          )
+          const isActive = point.id >= 1 && point.id <= 5
+
+          return (
+            <div
+              key={point.id}
+              className={`resource-point ${
+                alreadyResearched ? "researched" : "inactive"
+              }`}
+              style={{
+                left: `${(point.x / 1024) * 1000 * scale}px`,
+                top: `${(point.y / 1024) * 1000 * scale}px`,
+                backgroundColor: alreadyResearched
+                  ? "blue"
+                  : isActive
+                  ? "red"
+                  : "transparent", // Червоний для активних, синій для досліджених
+              }}
+              onClick={() => handlePointClick(point)}
+              onMouseEnter={() =>
+                alreadyResearched &&
+                setHoveredResourceName(resource.resourceName)
+              }
+              onMouseLeave={() => setHoveredResourceName(null)}
+            >
+              {point.id}
+            </div>
+          )
+        })}
+        {hoveredResourceName && (
           <div
-            key={point.id}
-            className={`resource-point ${
-              point.id >= 1 && point.id <= 5 ? "active" : "inactive"
-            }`}
+            className="resource-name-tooltip"
             style={{
-              left: `${(point.x / 1024) * 1000 * scale}px`,
-              top: `${(point.y / 1024) * 1000 * scale}px`,
-              backgroundColor: resources.some(
-                (resource) => resource.id === point.id
-              )
-                ? "blue" // Змінюємо колір на синій, якщо ресурс вже досліджений
-                : "",
+              position: "absolute",
+              left: "10px",
+              top: "10px",
+              backgroundColor: "white",
+              color: "black",
+              border: "1px solid black",
+              padding: "5px",
             }}
-            onClick={() => handlePointClick(point)}
           >
-            {point.id}
+            {hoveredResourceName}
           </div>
-        ))}
+        )}
       </div>
 
       <ConfirmationModal
