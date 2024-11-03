@@ -11,6 +11,11 @@ const resourceReducer = (state = initialState, action) => {
         ...state,
         resources: [...state.resources, action.payload],
       }
+    case "ADD_ITEM":
+      return {
+        ...state,
+        resources: [...state.resources, action.payload],
+      }
     case "REMOVE_RESOURCE": // Нова дія для видалення ресурсу
       return {
         ...state,
