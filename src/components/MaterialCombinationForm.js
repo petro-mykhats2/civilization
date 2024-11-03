@@ -35,12 +35,14 @@ const MaterialCombinationForm = () => {
 
     if (combination) {
       const newItem = {
-        id: generateUniqueId(), // Виклик функції для генерації унікального ID
-        message: "інструмент", // Ваше повідомлення
-        resourceName: combination.result, // Назва нового ресурсу
+        id: generateUniqueId(),
+        message: combination.type, // Ваше повідомлення (можна замінити на combination.type)
+        resourceName: combination.result,
+        type: combination.type, // Додали тип
+        createdByUser: combination.createdByUser, // Додали статус створення
       }
       dispatch(addItem(newItem)) // Додайте новий елемент до Redux
-      setMessage(`Успіх! Створено: ${combination.result}`)
+      setMessage(`Успіх! Створено: ${combination.result} (${combination.type})`)
     } else {
       setMessage("Комбінація неможлива.")
     }

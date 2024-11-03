@@ -57,7 +57,7 @@ const MaterialsContainer = () => {
                   <span className="item_title">{resource.resourceName}</span>
                 </td>
                 <td>{resource.message}</td>
-                <td>More Details</td>
+                <td>{resource.type}</td>
 
                 <td>
                   <button onClick={() => handleRemoveResource(resource.id)}>
