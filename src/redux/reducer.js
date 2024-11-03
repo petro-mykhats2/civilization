@@ -1,20 +1,19 @@
-// reducer.js
-import { ADD_DATA, ADD_RESOURCE } from "./actions"
-
+// src/redux/reducer.js
 const initialState = {
-  data: [], // Місце для збереження даних
+  resources: [], // Переконайтеся, що тут масив
 }
 
-const dataReducer = (state = initialState, action) => {
+const resourceReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_DATA:
+    case "ADD_RESOURCE":
       return {
         ...state,
-        data: [...state.data, action.payload], // Додавання даних
+        resources: [...state.resources, action.payload], // Додає ресурс до масиву
       }
+    // Додайте інші дії, якщо потрібно
     default:
       return state
   }
 }
 
-export default dataReducer
+export default resourceReducer

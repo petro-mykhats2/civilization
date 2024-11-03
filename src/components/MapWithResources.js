@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
 import resourcePoints from "../data/coordinates.json"
 import "../styles/mapWithResources.scss"
-
-// Координати точок у пікселях на зображенні 1024x1024
+import { addResource } from "../redux/actions"
 
 const MapWithResources = () => {
+  const dispatch = useDispatch() // Хук для доступу до dispatch
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -25,11 +26,12 @@ const MapWithResources = () => {
     }
   }, [])
 
-  const handlePointClick = (message) => {
-    alert(message)
+  const handlePointClick = (point) => {
+    // Диспатч дії для додавання ресурсу
+    dispatch(addResource(point))
+    alert(point.message) // Можна залишити попереднє сповіщення
   }
 
-  // Визначаємо масштаб на основі вікна
   const scale = Math.min(
     windowDimensions.width / 1024,
     windowDimensions.height / 1024
@@ -38,12 +40,12 @@ const MapWithResources = () => {
   return (
     <div className="map-container">
       <img
-        src="./mapa.png" // Змініть шлях до вашої карти
+        src="./mapa.png"
         alt="Map"
         className="map-image"
         style={{
-          width: `${1024 * scale}px`, // Масштабування ширини зображення
-          height: `${1024 * scale}px`, // Масштабування висоти зображення
+          width: `${1024 * scale}px`,
+          height: `${1024 * scale}px`,
         }}
       />
       <div className="resource-layer">
@@ -52,10 +54,10 @@ const MapWithResources = () => {
             key={point.id}
             className="resource-point"
             style={{
-              left: `${(point.x / 1024) * 1000 * scale}px`, // Позиціонування точок
+              left: `${(point.x / 1024) * 1000 * scale}px`,
               top: `${(point.y / 1024) * 1000 * scale}px`,
             }}
-            onClick={() => handlePointClick(point.message)}
+            onClick={() => handlePointClick(point)}
           >
             {point.id}
           </div>
