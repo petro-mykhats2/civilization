@@ -32,10 +32,14 @@ const MapWithResources = () => {
   }, [])
 
   const handlePointClick = (point) => {
-    if (point.id >= 1 && point.id <= 5) {
-      setSelectedPoint(point)
-      setIsModalOpen(true)
+    if (resources.some((resource) => resource.id === point.id)) {
+      // Якщо область вже досліджена, просто не робимо нічого
+      return // Виходимо з функції
     }
+
+    // Якщо область не досліджена, відкриваємо модальне вікно
+    setSelectedPoint(point)
+    setIsModalOpen(true)
   }
 
   const confirmResearch = () => {
