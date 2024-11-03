@@ -36,12 +36,22 @@ const MapWithResources = () => {
     const alreadyResearched = resources.some(
       (resource) => resource.id === point.id
     )
+    const isActive = point.id >= 1 && point.id <= 5
+
+    // Блокуємо можливість дослідження неактивних полів
+    if (!isActive) {
+      alert("Цю область поки що не можна дослідити! ")
+      return // Виходимо, нічого не робимо
+    }
+
+    // Якщо область вже досліджена, показуємо alert з resourceName
     if (alreadyResearched) {
       const resource = resources.find((resource) => resource.id === point.id)
       alert(`Тут знайдено: ${resource.resourceName}`)
-      return
+      return // Виходимо, щоб не відкрити модальне вікно
     }
 
+    // Якщо область ще не досліджена, відкриваємо модальне вікно
     setSelectedPoint(point)
     setIsModalOpen(true)
   }
