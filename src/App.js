@@ -10,7 +10,7 @@ import MaterialsContainer from "./components/MaterialsContainer" // Виправ
 import Technologies from "./components/Technologies" // Виправлено
 import MapWithResources from "./components/MapWithResources"
 import "../src/styles/app.scss"
-import ResourcesList from "./components/ResourcesList"
+import ResourceList from "./components/ResourceList"
 
 const darkTheme = createTheme({
   palette: {
@@ -24,8 +24,8 @@ const darkTheme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={darkTheme}>
+      <ResourceList />
       <CssBaseline />
-      <ResourcesList />
       <Router>
         <div className="App">
           <AppBar position="static">

@@ -1,21 +1,17 @@
+// src/index.js
 import React from "react"
-import ReactDOM from "react-dom/client" // Зміна імпорту
+import ReactDOM from "react-dom/client"
 import { Provider } from "react-redux"
-import { configureStore } from "@reduxjs/toolkit"
-import resourceReducer from "./redux/reducer" // ваш редюсер
+import { PersistGate } from "redux-persist/integration/react"
+import { store, persistor } from "./redux/store"
 import App from "./App"
 
-// Створення store
-const store = configureStore({
-  reducer: resourceReducer,
-})
-
-// Створення кореня рендерингу
 const root = ReactDOM.createRoot(document.getElementById("root"))
 
-// Виклик рендерингу
 root.render(
   <Provider store={store}>
-    <App />
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
   </Provider>
 )
