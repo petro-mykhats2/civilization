@@ -32,15 +32,27 @@ const MapWithResources = () => {
     }
   }, [])
 
+  const allResearchPoints = resources.filter(
+    (resource) => resource.id >= 1 && resource.id <= 5
+  )
+  const canActivateNextFields = allResearchPoints.length === 5
+
   const handlePointClick = (point) => {
     const alreadyResearched = resources.some(
       (resource) => resource.id === point.id
     )
-    const isActive = point.id >= 1 && point.id <= 5
+    const isActive =
+      (point.id >= 1 && point.id <= 5) ||
+      (canActivateNextFields && point.id >= 6 && point.id <= 15)
 
     // Блокуємо можливість дослідження неактивних полів
+    if (point.id > 15) {
+      alert("Цю область не можна дослідити!")
+      return // Виходимо, нічого не робимо
+    }
+
     if (!isActive) {
-      alert("Цю область поки що не можна дослідити! ")
+      alert("Цю область не можна дослідити!")
       return // Виходимо, нічого не робимо
     }
 
@@ -91,7 +103,9 @@ const MapWithResources = () => {
           const resource = resources.find(
             (resource) => resource.id === point.id
           )
-          const isActive = point.id >= 1 && point.id <= 5
+          const isActive =
+            (point.id >= 1 && point.id <= 5) ||
+            (canActivateNextFields && point.id >= 6 && point.id <= 15)
 
           return (
             <div
@@ -127,7 +141,6 @@ const MapWithResources = () => {
               left: "10px",
               top: "10px",
               backgroundColor: "white",
-              color: "black",
               border: "1px solid black",
               padding: "5px",
             }}
