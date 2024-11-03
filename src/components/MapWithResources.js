@@ -3,13 +3,16 @@ import { useDispatch } from "react-redux"
 import resourcePoints from "../data/coordinates.json"
 import "../styles/mapWithResources.scss"
 import { addResource } from "../redux/actions"
+import ConfirmationModal from "./ConfirmationModal" // Імпортуйте модальне вікно
 
 const MapWithResources = () => {
-  const dispatch = useDispatch() // Хук для доступу до dispatch
+  const dispatch = useDispatch()
   const [windowDimensions, setWindowDimensions] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
   })
+  const [isModalOpen, setIsModalOpen] = useState(false) // Стейт для контролю видимості модального вікна
+  const [selectedPoint, setSelectedPoint] = useState(null) // Стейт для вибраного ресурсу
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,9 +30,19 @@ const MapWithResources = () => {
   }, [])
 
   const handlePointClick = (point) => {
-    // Диспатч дії для додавання ресурсу
-    dispatch(addResource(point))
-    alert(point.message) // Можна залишити попереднє сповіщення
+    setSelectedPoint(point)
+    setIsModalOpen(true)
+  }
+
+  const confirmResearch = () => {
+    if (selectedPoint) {
+      dispatch(addResource(selectedPoint)) // Додайте ресурс
+      setIsModalOpen(false) // Закрийте модальне вікно
+    }
+  }
+
+  const cancelResearch = () => {
+    setIsModalOpen(false) // Закрийте модальне вікно без дії
   }
 
   const scale = Math.min(
@@ -63,6 +76,14 @@ const MapWithResources = () => {
           </div>
         ))}
       </div>
+
+      {/* Додайте компонент модального вікна */}
+      <ConfirmationModal
+        isOpen={isModalOpen}
+        onClose={cancelResearch}
+        onConfirm={confirmResearch}
+        resourceId={selectedPoint ? selectedPoint.id : null} // Передайте ID ресурсу
+      />
     </div>
   )
 }
