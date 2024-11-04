@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import MaterialCombinationForm from "./MaterialCombinationForm"
+import MultipleSelect from "./MultipleSelect"
 
 const MaterialsContainer = () => {
   const [checked, setChecked] = useState(false)
@@ -81,7 +81,7 @@ const MaterialsContainer = () => {
         </button>
         <button onClick={() => console.log("Go to next")}>Next &raquo;</button>
       </div>
-      <MaterialCombinationForm />
+      <MultipleSelect />
     </div>
   )
 }
