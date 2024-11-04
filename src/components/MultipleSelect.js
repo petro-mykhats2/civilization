@@ -25,9 +25,9 @@ export default function MultipleSelect() {
   const theme = useTheme()
   const dispatch = useDispatch()
   const [selectedMaterials, setSelectedMaterials] = React.useState([])
-  const [selectedTechnology, setSelectedTechnology] = React.useState([])
-  const [selectedTool, setSelectedTool] = React.useState([])
-  const [selectedWorkbench, setSelectedWorkbench] = React.useState([])
+  const [selectedTechnology, setSelectedTechnologies] = React.useState([])
+  const [selectedTool, setSelectedTools] = React.useState([])
+  const [selectedWorkbench, setSelectedWorkbenches] = React.useState([])
   const [message, setMessage] = React.useState("")
 
   const availableMaterials = useSelector((state) => state.resources.resources)
@@ -46,16 +46,30 @@ export default function MultipleSelect() {
     setSelectedMaterials(typeof value === "string" ? value.split(",") : value)
   }
 
+  // Вибір технологій
   const handleTechnologyChange = (event) => {
-    setSelectedTechnology(event.target.value)
+    const {
+      target: { value },
+    } = event
+    setSelectedTechnologies(
+      typeof value === "string" ? value.split(",") : value
+    )
   }
 
+  // Вибір інструментів
   const handleToolChange = (event) => {
-    setSelectedTool(event.target.value)
+    const {
+      target: { value },
+    } = event
+    setSelectedTools(typeof value === "string" ? value.split(",") : value)
   }
 
+  // Вибір верстатів
   const handleWorkbenchChange = (event) => {
-    setSelectedWorkbench(event.target.value)
+    const {
+      target: { value },
+    } = event
+    setSelectedWorkbenches(typeof value === "string" ? value.split(",") : value)
   }
 
   const generateUniqueId = () => {
@@ -122,6 +136,7 @@ export default function MultipleSelect() {
         <Select
           labelId="technology-label"
           id="technology-select"
+          multiple
           value={selectedTechnology}
           onChange={handleTechnologyChange}
           input={<OutlinedInput label="Технологія" />}
@@ -139,6 +154,7 @@ export default function MultipleSelect() {
         <Select
           labelId="tool-label"
           id="tool-select"
+          multiple
           value={selectedTool}
           onChange={handleToolChange}
           input={<OutlinedInput label="Інструмент" />}
@@ -156,6 +172,7 @@ export default function MultipleSelect() {
         <Select
           labelId="workbench-label"
           id="workbench-select"
+          multiple
           value={selectedWorkbench}
           onChange={handleWorkbenchChange}
           input={<OutlinedInput label="Верстат" />}
