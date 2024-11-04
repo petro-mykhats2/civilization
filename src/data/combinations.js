@@ -13,6 +13,7 @@ const combinations = [
   },
   {
     materials: ["Дерево", "Сокира"],
+    technologies: ["Технологія 2"],
     result: "Доска",
     type: "матеріал", // Додайте відповідний тип
     createdByUser: true,

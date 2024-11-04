@@ -25,11 +25,19 @@ export default function MultipleSelect() {
   const theme = useTheme()
   const dispatch = useDispatch()
   const [selectedMaterials, setSelectedMaterials] = React.useState([])
-  const [selectedTechnology, setSelectedTechnology] = React.useState("")
+  const [selectedTechnology, setSelectedTechnology] = React.useState([])
+  const [selectedTool, setSelectedTool] = React.useState([])
+  const [selectedWorkbench, setSelectedWorkbench] = React.useState([])
   const [message, setMessage] = React.useState("")
 
   const availableMaterials = useSelector((state) => state.resources.resources)
-  const availableTechnologies = ["Технологія 1", "Технологія 2"]
+  const availableTechnologies = useSelector(
+    (state) => state.resources.technologies
+  )
+  const availableTools = useSelector((state) => state.resources.tools)
+  const availableWorkbenches = useSelector(
+    (state) => state.resources.workbenches
+  )
 
   const handleMaterialsChange = (event) => {
     const {
@@ -40,6 +48,14 @@ export default function MultipleSelect() {
 
   const handleTechnologyChange = (event) => {
     setSelectedTechnology(event.target.value)
+  }
+
+  const handleToolChange = (event) => {
+    setSelectedTool(event.target.value)
+  }
+
+  const handleWorkbenchChange = (event) => {
+    setSelectedWorkbench(event.target.value)
   }
 
   const generateUniqueId = () => {
@@ -61,6 +77,9 @@ export default function MultipleSelect() {
         resourceName: combination.result,
         type: combination.type,
         createdByUser: true, // Додаємо прапорець для створених користувачем елементів
+        technology: selectedTechnology,
+        tool: selectedTool,
+        workbench: selectedWorkbench,
       }
       dispatch(addItem(newItem))
       setMessage(`Успіх! Створено: ${combination.result} (${combination.type})`)
@@ -110,6 +129,40 @@ export default function MultipleSelect() {
           {availableTechnologies.map((tech) => (
             <MenuItem key={tech} value={tech}>
               {tech}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl sx={{ m: 1, width: 400 }}>
+        <InputLabel id="tool-label">Інструмент</InputLabel>
+        <Select
+          labelId="tool-label"
+          id="tool-select"
+          value={selectedTool}
+          onChange={handleToolChange}
+          input={<OutlinedInput label="Інструмент" />}
+        >
+          {availableTools.map((tool) => (
+            <MenuItem key={tool} value={tool}>
+              {tool}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+
+      <FormControl sx={{ m: 1, width: 400 }}>
+        <InputLabel id="workbench-label">Верстат</InputLabel>
+        <Select
+          labelId="workbench-label"
+          id="workbench-select"
+          value={selectedWorkbench}
+          onChange={handleWorkbenchChange}
+          input={<OutlinedInput label="Верстат" />}
+        >
+          {availableWorkbenches.map((workbench) => (
+            <MenuItem key={workbench} value={workbench}>
+              {workbench}
             </MenuItem>
           ))}
         </Select>

@@ -1,6 +1,9 @@
 // src/redux/reducer.js
 const initialState = {
   resources: [],
+  technologies: ["Технологія 1", "Технологія 2"],
+  tools: ["Інструмент 1", "Інструмент 2"],
+  workbenches: ["Верстат 1", "Верстат 2"],
 }
 
 const resourceReducer = (state = initialState, action) => {
@@ -16,12 +19,12 @@ const resourceReducer = (state = initialState, action) => {
         ...state,
         resources: [...state.resources, action.payload],
       }
-    case "REMOVE_RESOURCE": // Нова дія для видалення ресурсу
+    case "REMOVE_RESOURCE":
       return {
         ...state,
         resources: state.resources.filter(
           (resource) => resource.id !== action.payload
-        ), // Видаляємо ресурс за id
+        ),
       }
     default:
       return state
