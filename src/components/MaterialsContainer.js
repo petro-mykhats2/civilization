@@ -27,6 +27,7 @@ const MaterialsContainer = () => {
           <option value="">Filter</option>
         </select>
       </div>
+      <MultipleSelect />
 
       <table>
         <thead>
@@ -81,7 +82,6 @@ const MaterialsContainer = () => {
         </button>
         <button onClick={() => console.log("Go to next")}>Next &raquo;</button>
       </div>
-      <MultipleSelect />
     </div>
   )
 }

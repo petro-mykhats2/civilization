@@ -48,8 +48,10 @@ export default function MultipleSelect() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const combination = combinations.find((combo) =>
-      combo.materials.every((mat) => selectedMaterials.includes(mat))
+    const combination = combinations.find(
+      (combo) =>
+        combo.materials.length === selectedMaterials.length && // Перевірка точної відповідності кількості
+        combo.materials.every((mat) => selectedMaterials.includes(mat))
     )
 
     if (combination) {
@@ -58,7 +60,7 @@ export default function MultipleSelect() {
         message: combination.type,
         resourceName: combination.result,
         type: combination.type,
-        createdByUser: combination.createdByUser,
+        createdByUser: true, // Додаємо прапорець для створених користувачем елементів
       }
       dispatch(addItem(newItem))
       setMessage(`Успіх! Створено: ${combination.result} (${combination.type})`)
