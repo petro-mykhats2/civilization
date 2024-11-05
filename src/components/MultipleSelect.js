@@ -34,6 +34,9 @@ export default function MultipleSelect() {
   const availableTechnologies = useSelector(
     (state) => state.resources.technologies
   )
+
+  console.log("Технології після `useSelector`:", availableTechnologies)
+
   const availableTools = useSelector((state) => state.resources.tools)
   const availableWorkbenches = useSelector(
     (state) => state.resources.workbenches
@@ -78,11 +81,19 @@ export default function MultipleSelect() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    const combination = combinations.find(
-      (combo) =>
-        combo.materials.length === selectedMaterials.length && // Перевірка точної відповідності кількості
+    const combination = combinations.find((combo) => {
+      const materialsMatch =
+        combo.materials.length === selectedMaterials.length &&
         combo.materials.every((mat) => selectedMaterials.includes(mat))
-    )
+
+      // Перевіряємо технології тільки якщо вони є в комбінації
+      const technologiesMatch = combo.technologies
+        ? combo.technologies.length === selectedTechnology.length &&
+          combo.technologies.every((tech) => selectedTechnology.includes(tech))
+        : true // Якщо технологій немає, вважаємо умову виконаною
+
+      return materialsMatch && technologiesMatch
+    })
 
     if (combination) {
       const newItem = {
@@ -90,7 +101,7 @@ export default function MultipleSelect() {
         message: combination.type,
         resourceName: combination.result,
         type: combination.type,
-        createdByUser: true, // Додаємо прапорець для створених користувачем елементів
+        createdByUser: true,
         technology: selectedTechnology,
         tool: selectedTool,
         workbench: selectedWorkbench,
@@ -131,7 +142,7 @@ export default function MultipleSelect() {
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, width: 400 }}>
+      <FormControl sx={{ m: 1, width: 500 }}>
         <InputLabel id="technology-label">Технологія</InputLabel>
         <Select
           labelId="technology-label"
@@ -140,16 +151,25 @@ export default function MultipleSelect() {
           value={selectedTechnology}
           onChange={handleTechnologyChange}
           input={<OutlinedInput label="Технологія" />}
+          MenuProps={MenuProps}
         >
           {availableTechnologies.map((tech) => (
-            <MenuItem key={tech} value={tech}>
+            <MenuItem
+              key={tech}
+              value={tech}
+              style={{
+                fontWeight: selectedTechnology.includes(tech)
+                  ? theme.typography.fontWeightMedium
+                  : theme.typography.fontWeightRegular,
+              }}
+            >
               {tech}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, width: 400 }}>
+      <FormControl sx={{ m: 1, width: 500 }}>
         <InputLabel id="tool-label">Інструмент</InputLabel>
         <Select
           labelId="tool-label"
@@ -158,16 +178,25 @@ export default function MultipleSelect() {
           value={selectedTool}
           onChange={handleToolChange}
           input={<OutlinedInput label="Інструмент" />}
+          MenuProps={MenuProps}
         >
           {availableTools.map((tool) => (
-            <MenuItem key={tool} value={tool}>
+            <MenuItem
+              key={tool}
+              value={tool}
+              style={{
+                fontWeight: selectedTool.includes(tool)
+                  ? theme.typography.fontWeightMedium
+                  : theme.typography.fontWeightRegular,
+              }}
+            >
               {tool}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
 
-      <FormControl sx={{ m: 1, width: 400 }}>
+      <FormControl sx={{ m: 1, width: 500 }}>
         <InputLabel id="workbench-label">Верстат</InputLabel>
         <Select
           labelId="workbench-label"
@@ -176,9 +205,18 @@ export default function MultipleSelect() {
           value={selectedWorkbench}
           onChange={handleWorkbenchChange}
           input={<OutlinedInput label="Верстат" />}
+          MenuProps={MenuProps}
         >
           {availableWorkbenches.map((workbench) => (
-            <MenuItem key={workbench} value={workbench}>
+            <MenuItem
+              key={workbench}
+              value={workbench}
+              style={{
+                fontWeight: selectedWorkbench.includes(workbench)
+                  ? theme.typography.fontWeightMedium
+                  : theme.typography.fontWeightRegular,
+              }}
+            >
               {workbench}
             </MenuItem>
           ))}
