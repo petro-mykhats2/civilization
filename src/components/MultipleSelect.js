@@ -34,9 +34,6 @@ export default function MultipleSelect() {
   const availableTechnologies = useSelector(
     (state) => state.resources.technologies
   )
-
-  console.log("Технології після `useSelector`:", availableTechnologies)
-
   const availableTools = useSelector((state) => state.resources.tools)
   const availableWorkbenches = useSelector(
     (state) => state.resources.workbenches
@@ -49,7 +46,6 @@ export default function MultipleSelect() {
     setSelectedMaterials(typeof value === "string" ? value.split(",") : value)
   }
 
-  // Вибір технологій
   const handleTechnologyChange = (event) => {
     const {
       target: { value },
@@ -59,7 +55,6 @@ export default function MultipleSelect() {
     )
   }
 
-  // Вибір інструментів
   const handleToolChange = (event) => {
     const {
       target: { value },
@@ -67,7 +62,6 @@ export default function MultipleSelect() {
     setSelectedTools(typeof value === "string" ? value.split(",") : value)
   }
 
-  // Вибір верстатів
   const handleWorkbenchChange = (event) => {
     const {
       target: { value },
@@ -86,28 +80,46 @@ export default function MultipleSelect() {
         combo.materials.length === selectedMaterials.length &&
         combo.materials.every((mat) => selectedMaterials.includes(mat))
 
-      // Перевіряємо технології тільки якщо вони є в комбінації
       const technologiesMatch = combo.technologies
         ? combo.technologies.length === selectedTechnology.length &&
           combo.technologies.every((tech) => selectedTechnology.includes(tech))
-        : true // Якщо технологій немає, вважаємо умову виконаною
+        : true
 
       return materialsMatch && technologiesMatch
     })
 
     if (combination) {
-      const newItem = {
-        id: generateUniqueId(),
-        message: combination.type,
-        resourceName: combination.result,
-        type: combination.type,
-        createdByUser: true,
-        technology: selectedTechnology,
-        tool: selectedTool,
-        workbench: selectedWorkbench,
+      // Перевірка на наявність елементів
+      const resourceExists =
+        availableMaterials.some((material) =>
+          selectedMaterials.includes(material.resourceName)
+        ) ||
+        availableTechnologies.some((tech) =>
+          selectedTechnology.includes(tech)
+        ) ||
+        availableTools.some((tool) => selectedTool.includes(tool)) ||
+        availableWorkbenches.some((workbench) =>
+          selectedWorkbench.includes(workbench)
+        )
+
+      if (resourceExists) {
+        setMessage("Один або кілька вибраних елементів вже існують у системі.")
+      } else {
+        const newItem = {
+          id: generateUniqueId(),
+          message: combination.type,
+          resourceName: combination.result,
+          type: combination.type,
+          createdByUser: true,
+          technology: selectedTechnology,
+          tool: selectedTool,
+          workbench: selectedWorkbench,
+        }
+        dispatch(addItem(newItem))
+        setMessage(
+          `Успіх! Створено: ${combination.result} (${combination.type})`
+        )
       }
-      dispatch(addItem(newItem))
-      setMessage(`Успіх! Створено: ${combination.result} (${combination.type})`)
     } else {
       setMessage("Комбінація неможлива.")
     }
