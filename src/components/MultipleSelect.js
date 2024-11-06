@@ -89,21 +89,13 @@ export default function MultipleSelect() {
     })
 
     if (combination) {
-      // Перевірка на наявність елементів
-      const resourceExists =
-        availableMaterials.some((material) =>
-          selectedMaterials.includes(material.resourceName)
-        ) ||
-        availableTechnologies.some((tech) =>
-          selectedTechnology.includes(tech)
-        ) ||
-        availableTools.some((tool) => selectedTool.includes(tool)) ||
-        availableWorkbenches.some((workbench) =>
-          selectedWorkbench.includes(workbench)
-        )
+      // Перевірка наявності елемента, що створюється
+      const resourceExists = availableMaterials.some(
+        (material) => material.resourceName === combination.result
+      )
 
       if (resourceExists) {
-        setMessage("Один або кілька вибраних елементів вже існують у системі.")
+        setMessage(`${combination.result} вже існує у вашому списку.`)
       } else {
         const newItem = {
           id: generateUniqueId(),
