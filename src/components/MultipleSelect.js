@@ -85,17 +85,34 @@ export default function MultipleSelect() {
           combo.technologies.every((tech) => selectedTechnology.includes(tech))
         : true
 
-      return materialsMatch && technologiesMatch
+      const toolsMatch = combo.tools
+        ? combo.tools.length === selectedTool.length &&
+          combo.tools.every((tool) => selectedTool.includes(tool))
+        : true
+
+      const workbenchesMatch = combo.workbenches
+        ? combo.workbenches.length === selectedWorkbench.length &&
+          combo.workbenches.every((workbench) =>
+            selectedWorkbench.includes(workbench)
+          )
+        : true
+
+      return (
+        materialsMatch && technologiesMatch && toolsMatch && workbenchesMatch
+      )
     })
 
     if (combination) {
-      // Перевірка наявності елемента, що створюється
-      const resourceExists = availableMaterials.some(
-        (material) => material.resourceName === combination.result
-      )
+      const resultName = combination.result
+      const resourceExists =
+        availableMaterials.some(
+          (material) => material.resourceName === resultName
+        ) ||
+        availableTools.some((tool) => tool === resultName) ||
+        availableWorkbenches.some((workbench) => workbench === resultName)
 
       if (resourceExists) {
-        setMessage(`${combination.result} вже існує у вашому списку.`)
+        setMessage(`${resultName} вже існує у вашому списку.`)
       } else {
         const newItem = {
           id: generateUniqueId(),

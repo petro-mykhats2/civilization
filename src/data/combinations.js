@@ -18,6 +18,15 @@ const combinations = [
     type: "матеріал", // Додайте відповідний тип
     createdByUser: true,
   },
+  {
+    materials: ["Дерево", "Сокира"],
+    technologies: ["Технологія 1"],
+    tools: ["Інструмент 1"],
+    workbenches: ["Верстат 1"],
+    result: "Доска шліфована",
+    type: "матеріал", // Додайте відповідний тип
+    createdByUser: true,
+  },
   // Додати інші комбінації
 ]
 
