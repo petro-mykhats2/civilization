@@ -9,6 +9,8 @@ import Button from "@mui/material/Button"
 import { useDispatch, useSelector } from "react-redux"
 import combinations from "../data/combinations"
 import { addItem, addTechnology, addTool, addWorkbench } from "../redux/actions"
+import Alert from "@mui/material/Alert"
+import AlertTitle from "@mui/material/AlertTitle"
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -29,6 +31,7 @@ export default function MultipleSelect() {
   const [selectedTool, setSelectedTools] = React.useState([])
   const [selectedWorkbench, setSelectedWorkbenches] = React.useState([])
   const [message, setMessage] = React.useState("")
+  const [alertSeverity, setAlertSeverity] = React.useState("")
 
   const availableMaterials = useSelector((state) => state.resources.resources)
   const availableTechnologies = useSelector(
@@ -108,11 +111,12 @@ export default function MultipleSelect() {
         availableMaterials.some(
           (material) => material.resourceName === resultName
         ) ||
-        availableTechnologies.some((tool) => tool === resultName) ||
+        availableTechnologies.some((tech) => tech === resultName) ||
         availableTools.some((tool) => tool === resultName) ||
         availableWorkbenches.some((workbench) => workbench === resultName)
 
       if (resourceExists) {
+        setAlertSeverity("warning")
         setMessage(`${resultName} вже існує у вашому списку.`)
       } else {
         const newItem = {
@@ -143,13 +147,20 @@ export default function MultipleSelect() {
             break
         }
 
+        setAlertSeverity("success")
         setMessage(
           `Успіх! Створено: ${combination.result} (${combination.type})`
         )
       }
     } else {
+      setAlertSeverity("error")
       setMessage("Комбінація неможлива.")
     }
+
+    // Повідомлення зникає через 4 секунди
+    setTimeout(() => {
+      setMessage("")
+    }, 4000)
   }
 
   return (
@@ -261,12 +272,23 @@ export default function MultipleSelect() {
           ))}
         </Select>
       </FormControl>
+      <br />
+      {message && (
+        <Alert severity={alertSeverity}>
+          <AlertTitle>
+            {alertSeverity === "success"
+              ? "Успіх"
+              : alertSeverity === "warning"
+              ? "Увага"
+              : "Помилка"}
+          </AlertTitle>
+          {message}
+        </Alert>
+      )}
 
       <Button variant="contained" onClick={handleSubmit} sx={{ mt: 2 }}>
         Створити
       </Button>
-
-      {message && <p>{message}</p>}
     </div>
   )
 }
