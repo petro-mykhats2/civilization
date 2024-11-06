@@ -1,4 +1,3 @@
-// src/redux/reducer.js
 const initialState = {
   resources: [],
   technologies: [
@@ -14,7 +13,6 @@ const initialState = {
 }
 
 const resourceReducer = (state = initialState, action) => {
-  console.log("Поточний стан:", state) // Додайте це для відстеження
   switch (action.type) {
     case "ADD_RESOURCE":
       return {
@@ -25,6 +23,21 @@ const resourceReducer = (state = initialState, action) => {
       return {
         ...state,
         resources: [...state.resources, action.payload],
+      }
+    case "ADD_TECHNOLOGY":
+      return {
+        ...state,
+        technologies: [...state.technologies, action.payload],
+      }
+    case "ADD_TOOL":
+      return {
+        ...state,
+        tools: [...state.tools, action.payload],
+      }
+    case "ADD_WORKBENCH":
+      return {
+        ...state,
+        workbenches: [...state.workbenches, action.payload],
       }
     case "REMOVE_RESOURCE":
       return {

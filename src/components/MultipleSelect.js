@@ -8,7 +8,7 @@ import Select from "@mui/material/Select"
 import Button from "@mui/material/Button"
 import { useDispatch, useSelector } from "react-redux"
 import combinations from "../data/combinations"
-import { addItem } from "../redux/actions"
+import { addItem, addTechnology, addTool, addWorkbench } from "../redux/actions"
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
@@ -108,6 +108,7 @@ export default function MultipleSelect() {
         availableMaterials.some(
           (material) => material.resourceName === resultName
         ) ||
+        availableTechnologies.some((tool) => tool === resultName) ||
         availableTools.some((tool) => tool === resultName) ||
         availableWorkbenches.some((workbench) => workbench === resultName)
 
@@ -124,7 +125,24 @@ export default function MultipleSelect() {
           tool: selectedTool,
           workbench: selectedWorkbench,
         }
-        dispatch(addItem(newItem))
+
+        switch (combination.type) {
+          case "матеріал":
+            dispatch(addItem(newItem))
+            break
+          case "технологія":
+            dispatch(addTechnology(newItem.resourceName))
+            break
+          case "інструмент":
+            dispatch(addTool(newItem.resourceName))
+            break
+          case "верстат":
+            dispatch(addWorkbench(newItem.resourceName))
+            break
+          default:
+            break
+        }
+
         setMessage(
           `Успіх! Створено: ${combination.result} (${combination.type})`
         )

@@ -12,16 +12,17 @@ const combinations = [
     createdByUser: true,
   },
   {
-    materials: ["Дерево", "Сокира"],
+    materials: ["Дерево"],
     technologies: ["Технологія 2"],
+    tools: ["Сокира"],
     result: "Доска",
-    type: "матеріал", // Додайте відповідний тип
+    type: "верстат", // Додайте відповідний тип
     createdByUser: true,
   },
   {
-    materials: ["Дерево", "Сокира"],
+    materials: ["Дерево"],
     technologies: ["Технологія 1"],
-    tools: ["Інструмент 1"],
+    tools: ["Сокира"],
     workbenches: ["Верстат 1"],
     result: "Доска шліфована",
     type: "матеріал", // Додайте відповідний тип
