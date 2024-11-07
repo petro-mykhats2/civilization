@@ -35,3 +35,19 @@
   color: aliceblue;
 padding: 8px;}
 
+.search-filter-container {
+  display: flex;
+  align-items: center;
+   gap: 10px; 
+   padding-top: 10px;
+   padding-left: 10px;/* Відступ між елементами */
+}
+
+.search-bar input {
+  flex-grow: 1; /* Щоб поле пошуку розтягувалося */
+  padding: 8px; /* Відступи всередині */
+}
+
+.filters select {
+  padding: 8px;
+}

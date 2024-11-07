@@ -11,8 +11,24 @@ const MaterialsContainer = () => {
   const workbenches = useSelector((state) => state.resources.workbenches)
   const dispatch = useDispatch()
 
-  const handleRemoveResource = (id) => {
-    dispatch({ type: "REMOVE_RESOURCE", payload: id })
+  // Оновлена функція видалення для різних категорій
+  const handleRemoveResource = (id, type) => {
+    switch (type) {
+      case "матеріал":
+        dispatch({ type: "DELETE_MATERIAL", payload: id })
+        break
+      case "технологія":
+        dispatch({ type: "DELETE_TECHNOLOGY", payload: id })
+        break
+      case "інструмент":
+        dispatch({ type: "DELETE_TOOL", payload: id })
+        break
+      case "верстат":
+        dispatch({ type: "DELETE_WORKBENCH", payload: id })
+        break
+      default:
+        console.error("Категорія для видалення не знайдена.")
+    }
   }
 
   const filteredItems = () => {
@@ -72,23 +88,25 @@ const MaterialsContainer = () => {
 
   return (
     <div className="App">
-      <div className="search-bar">
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Оновлюємо значення пошуку
-        />
-      </div>
+      <div className="search-filter-container">
+        <div className="search-bar">
+          <input
+            type="text"
+            placeholder="Search..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
 
-      <div className="filters">
-        <select value={filter} onChange={(e) => setFilter(e.target.value)}>
-          <option value="всі">Всі категорії</option>
-          <option value="матеріали">Матеріали</option>
-          <option value="технології">Технології</option>
-          <option value="інструменти">Інструменти</option>
-          <option value="верстати">Верстати</option>
-        </select>
+        <div className="filters">
+          <select value={filter} onChange={(e) => setFilter(e.target.value)}>
+            <option value="всі">Всі категорії</option>
+            <option value="матеріали">Матеріали</option>
+            <option value="технології">Технології</option>
+            <option value="інструменти">Інструменти</option>
+            <option value="верстати">Верстати</option>
+          </select>
+        </div>
       </div>
 
       <MultipleSelect />
@@ -111,7 +129,9 @@ const MaterialsContainer = () => {
                 </td>
                 <td>{item.type}</td>
                 <td>
-                  <button onClick={() => handleRemoveResource(item.id)}>
+                  <button
+                    onClick={() => handleRemoveResource(item.id, item.type)}
+                  >
                     Видалити
                   </button>
                 </td>

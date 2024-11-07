@@ -29,3 +29,14 @@ export const addWorkbench = (workbench) => ({
   type: ADD_WORKBENCH,
   payload: workbench,
 })
+
+export const deleteMaterial = (id) => ({ type: "DELETE_MATERIAL", payload: id })
+export const deleteTechnology = (id) => ({
+  type: "DELETE_TECHNOLOGY",
+  payload: id,
+})
+export const deleteTool = (id) => ({ type: "DELETE_TOOL", payload: id })
+export const deleteWorkbench = (id) => ({
+  type: "DELETE_WORKBENCH",
+  payload: id,
+})

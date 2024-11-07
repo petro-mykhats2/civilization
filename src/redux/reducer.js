@@ -46,6 +46,34 @@ const resourceReducer = (state = initialState, action) => {
           (resource) => resource.id !== action.payload
         ),
       }
+    case "DELETE_MATERIAL":
+      return {
+        ...state,
+        resources: state.resources.filter(
+          (resource) => resource.id !== action.payload
+        ),
+      }
+    case "DELETE_TECHNOLOGY":
+      return {
+        ...state,
+        technologies: state.technologies.filter(
+          (_, index) => `tech-${index}` !== action.payload
+        ),
+      }
+    case "DELETE_TOOL":
+      return {
+        ...state,
+        tools: state.tools.filter(
+          (_, index) => `tool-${index}` !== action.payload
+        ),
+      }
+    case "DELETE_WORKBENCH":
+      return {
+        ...state,
+        workbenches: state.workbenches.filter(
+          (_, index) => `workbench-${index}` !== action.payload
+        ),
+      }
     default:
       return state
   }
