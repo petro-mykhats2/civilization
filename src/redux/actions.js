@@ -11,7 +11,7 @@ export const addResource = (resource) => ({
 })
 
 export const addItem = (item) => ({
-  type: "ADD_ITEM",
+  type: ADD_ITEM,
   payload: item,
 })
 

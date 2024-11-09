@@ -27,9 +27,9 @@ export default function MultipleSelect() {
   const theme = useTheme()
   const dispatch = useDispatch()
   const [selectedMaterials, setSelectedMaterials] = React.useState([])
-  const [selectedTechnology, setSelectedTechnologies] = React.useState([])
-  const [selectedTool, setSelectedTools] = React.useState([])
-  const [selectedWorkbench, setSelectedWorkbenches] = React.useState([])
+  const [selectedTechnologies, setSelectedTechnologies] = React.useState([])
+  const [selectedTools, setSelectedTools] = React.useState([])
+  const [selectedWorkbenches, setSelectedWorkbenches] = React.useState([])
   const [message, setMessage] = React.useState("")
   const [alertSeverity, setAlertSeverity] = React.useState("")
 
@@ -78,32 +78,49 @@ export default function MultipleSelect() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    console.log("Selected materials:", selectedMaterials)
+    console.log("Selected technologies:", selectedTechnologies)
+    console.log("Selected tools:", selectedTools)
+    console.log("Selected workbenches:", selectedWorkbenches)
+    console.log("Combinations:", combinations)
+
     const combination = combinations.find((combo) => {
+      console.log("Checking combination:", combo)
+
+      // Перевірки на існування масивів перед перевіркою довжини
       const materialsMatch =
-        combo.materials.length === selectedMaterials.length &&
-        combo.materials.every((mat) => selectedMaterials.includes(mat))
+        (combo.materials || []).length === (selectedMaterials || []).length &&
+        (combo.materials || []).every((mat) => selectedMaterials.includes(mat))
 
-      const technologiesMatch = combo.technologies
-        ? combo.technologies.length === selectedTechnology.length &&
-          combo.technologies.every((tech) => selectedTechnology.includes(tech))
-        : true
+      const technologiesMatch =
+        (combo.technologies || []).length ===
+          (selectedTechnologies || []).length &&
+        (combo.technologies || []).every((tech) =>
+          selectedTechnologies.includes(tech)
+        )
 
-      const toolsMatch = combo.tools
-        ? combo.tools.length === selectedTool.length &&
-          combo.tools.every((tool) => selectedTool.includes(tool))
-        : true
+      const toolsMatch =
+        (combo.tools || []).length === (selectedTools || []).length &&
+        (combo.tools || []).every((tool) => selectedTools.includes(tool))
 
-      const workbenchesMatch = combo.workbenches
-        ? combo.workbenches.length === selectedWorkbench.length &&
-          combo.workbenches.every((workbench) =>
-            selectedWorkbench.includes(workbench)
-          )
-        : true
+      const workbenchesMatch =
+        (combo.workbenches || []).length ===
+          (selectedWorkbenches || []).length &&
+        (combo.workbenches || []).every((workbench) =>
+          selectedWorkbenches.includes(workbench)
+        )
 
       return (
         materialsMatch && technologiesMatch && toolsMatch && workbenchesMatch
       )
     })
+
+    if (!combination) {
+      console.log("No matching combination found.")
+    } else {
+      console.log("Matching combination found:", combination)
+    }
 
     if (combination) {
       const resultName = combination.result
@@ -111,9 +128,9 @@ export default function MultipleSelect() {
         availableMaterials.some(
           (material) => material.resourceName === resultName
         ) ||
-        availableTechnologies.some((tech) => tech === resultName) ||
-        availableTools.some((tool) => tool === resultName) ||
-        availableWorkbenches.some((workbench) => workbench === resultName)
+        availableTechnologies.some((tech) => tech.name === resultName) ||
+        availableTools.some((tool) => tool.name === resultName) ||
+        availableWorkbenches.some((workbench) => workbench.name === resultName)
 
       if (resourceExists) {
         setAlertSeverity("warning")
@@ -125,23 +142,25 @@ export default function MultipleSelect() {
           resourceName: combination.result,
           type: combination.type,
           createdByUser: true,
-          technology: selectedTechnology,
-          tool: selectedTool,
-          workbench: selectedWorkbench,
+          technology: selectedTechnologies,
+          tool: selectedTools,
+          workbench: selectedWorkbenches,
         }
+
+        console.log("Dispatching new item:", newItem)
 
         switch (combination.type) {
           case "матеріал":
             dispatch(addItem(newItem))
             break
           case "технологія":
-            dispatch(addTechnology(newItem.resourceName))
+            dispatch(addTechnology(newItem))
             break
           case "інструмент":
-            dispatch(addTool(newItem.resourceName))
+            dispatch(addTool(newItem))
             break
           case "верстат":
-            dispatch(addWorkbench(newItem.resourceName))
+            dispatch(addWorkbench(newItem))
             break
           default:
             break
@@ -157,7 +176,6 @@ export default function MultipleSelect() {
       setMessage("Комбінація неможлива.")
     }
 
-    // Повідомлення зникає через 4 секунди
     setTimeout(() => {
       setMessage("")
     }, 4000)
@@ -198,22 +216,22 @@ export default function MultipleSelect() {
           labelId="technology-label"
           id="technology-select"
           multiple
-          value={selectedTechnology}
+          value={selectedTechnologies}
           onChange={handleTechnologyChange}
           input={<OutlinedInput label="Технологія" />}
           MenuProps={MenuProps}
         >
           {availableTechnologies.map((tech) => (
             <MenuItem
-              key={tech}
-              value={tech}
+              key={tech.id}
+              value={tech.name}
               style={{
-                fontWeight: selectedTechnology.includes(tech)
+                fontWeight: selectedTechnologies.includes(tech.name)
                   ? theme.typography.fontWeightMedium
                   : theme.typography.fontWeightRegular,
               }}
             >
-              {tech}
+              {tech.name}
             </MenuItem>
           ))}
         </Select>
@@ -225,22 +243,22 @@ export default function MultipleSelect() {
           labelId="tool-label"
           id="tool-select"
           multiple
-          value={selectedTool}
+          value={selectedTools}
           onChange={handleToolChange}
           input={<OutlinedInput label="Інструмент" />}
           MenuProps={MenuProps}
         >
           {availableTools.map((tool) => (
             <MenuItem
-              key={tool}
-              value={tool}
+              key={tool.id}
+              value={tool.name}
               style={{
-                fontWeight: selectedTool.includes(tool)
+                fontWeight: selectedTools.includes(tool.name)
                   ? theme.typography.fontWeightMedium
                   : theme.typography.fontWeightRegular,
               }}
             >
-              {tool}
+              {tool.name}
             </MenuItem>
           ))}
         </Select>
@@ -252,26 +270,27 @@ export default function MultipleSelect() {
           labelId="workbench-label"
           id="workbench-select"
           multiple
-          value={selectedWorkbench}
+          value={selectedWorkbenches}
           onChange={handleWorkbenchChange}
           input={<OutlinedInput label="Верстат" />}
           MenuProps={MenuProps}
         >
           {availableWorkbenches.map((workbench) => (
             <MenuItem
-              key={workbench}
-              value={workbench}
+              key={workbench.id}
+              value={workbench.name}
               style={{
-                fontWeight: selectedWorkbench.includes(workbench)
+                fontWeight: selectedWorkbenches.includes(workbench.name)
                   ? theme.typography.fontWeightMedium
                   : theme.typography.fontWeightRegular,
               }}
             >
-              {workbench}
+              {workbench.name}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
+
       <br />
       {message && (
         <Alert severity={alertSeverity}>

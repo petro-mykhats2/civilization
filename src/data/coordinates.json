@@ -4,105 +4,120 @@
         "x": 662,
         "y": 352,
         "message": "Дослідження в області 1",
-        "resourceName": "Дерево"
+        "resourceName": "Дерево",
+        "type": "матеріал"
     },
     {
         "id": 2,
         "x": 691,
         "y": 404,
         "message": "Дослідження в області 2",
-        "resourceName": "Пісок"
+        "resourceName": "Пісок",
+        "type": "матеріал"
     },
     {
         "id": 3,
         "x": 748,
         "y": 390,
         "message": "Дослідження в області 3",
-        "resourceName": "Очерет"
+        "resourceName": "Очерет",
+        "type": "матеріал"
     },
     {
         "id": 4,
         "x": 648,
         "y": 290,
         "message": "Дослідження в області 4",
-        "resourceName": "Глина"
+        "resourceName": "Глина",
+        "type": "матеріал"
     },
     {
         "id": 5,
         "x": 848,
         "y": 490,
         "message": "Дослідження в області 5",
-        "resourceName": "Камінь"
+        "resourceName": "Камінь",
+        "type": "матеріал"
     },
     {
         "id": 6,
         "x": 859,
         "y": 602,
         "message": "Дослідження в області 6",
-        "resourceName": "Сіра"
+        "resourceName": "Сіра",
+        "type": "матеріал"
     },
     {
         "id": 7,
         "x": 775,
         "y": 464,
         "message": "Дослідження в області 7",
-        "resourceName": "Гравій"
+        "resourceName": "Гравій",
+        "type": "матеріал"
     },
     {
         "id": 8,
         "x": 674,
         "y": 585,
         "message": "Дослідження в області 8",
-        "resourceName": "Суха трава"
+        "resourceName": "Суха трава",
+        "type": "матеріал"
     },
     {
         "id": 9,
         "x": 711,
         "y": 865,
         "message": "Дослідження в області 9",
-        "resourceName": "Лоза"
+        "resourceName": "Лоза",
+        "type": "матеріал"
     },
     {
         "id": 10,
         "x": 676,
         "y": 888,
         "message": "Дослідження в області 10",
-        "resourceName": "Бамбук"
+        "resourceName": "Бамбук",
+        "type": "матеріал"
     },
     {
         "id": 11,
         "x": 681,
         "y": 804,
         "message": "Дослідження в області 11",
-        "resourceName": "Торф"
+        "resourceName": "Торф",
+        "type": "матеріал"
     },
     {
         "id": 12,
         "x": 412,
         "y": 598,
         "message": "Дослідження в області 12",
-        "resourceName": "Сіль"
+        "resourceName": "Сіль",
+        "type": "матеріал"
     },
     {
         "id": 13,
         "x": 493,
         "y": 493,
         "message": "Дослідження в області 13",
-        "resourceName": "Кора дерев"
+        "resourceName": "Кора дерев",
+        "type": "матеріал"
     },
     {
         "id": 14,
         "x": 473,
         "y": 738,
         "message": "Дослідження в області 14",
-        "resourceName": "Галька"
+        "resourceName": "Галька",
+        "type": "матеріал"
     },
     {
         "id": 15,
         "x": 374,
         "y": 352,
         "message": "Дослідження в області 15",
-        "resourceName": "Латекс"
+        "resourceName": "Латекс",
+        "type": "матеріал"
     },
     {
         "id": 16,

@@ -13,6 +13,7 @@ const MaterialsContainer = () => {
 
   // Оновлена функція видалення для різних категорій
   const handleRemoveResource = (id, type) => {
+    console.log("Attempting to remove:", { id, type })
     switch (type) {
       case "матеріал":
         dispatch({ type: "DELETE_MATERIAL", payload: id })
@@ -39,43 +40,43 @@ const MaterialsContainer = () => {
         filtered = resources
         break
       case "технології":
-        filtered = technologies.map((tech, index) => ({
-          id: `tech-${index}`,
-          resourceName: tech,
-          type: "технологія",
+        filtered = technologies.map((tech) => ({
+          id: tech.id,
+          resourceName: tech.name,
+          type: tech.type || "технологія", // додавання захисту
         }))
         break
       case "інструменти":
-        filtered = tools.map((tool, index) => ({
-          id: `tool-${index}`,
-          resourceName: tool,
-          type: "інструмент",
+        filtered = tools.map((tool) => ({
+          id: tool.id,
+          resourceName: tool.name,
+          type: tool.type || "інструмент", // додавання захисту
         }))
         break
       case "верстати":
-        filtered = workbenches.map((workbench, index) => ({
-          id: `workbench-${index}`,
-          resourceName: workbench,
-          type: "верстат",
+        filtered = workbenches.map((workbench) => ({
+          id: workbench.id,
+          resourceName: workbench.name,
+          type: workbench.type || "верстат", // додавання захисту
         }))
         break
       default:
         filtered = [
           ...resources,
-          ...technologies.map((tech, index) => ({
-            id: `tech-${index}`,
-            resourceName: tech,
-            type: "технологія",
+          ...technologies.map((tech) => ({
+            id: tech.id,
+            resourceName: tech.name,
+            type: tech.type || "технологія", // додавання захисту
           })),
-          ...tools.map((tool, index) => ({
-            id: `tool-${index}`,
-            resourceName: tool,
-            type: "інструмент",
+          ...tools.map((tool) => ({
+            id: tool.id,
+            resourceName: tool.name,
+            type: tool.type || "інструмент", // додавання захисту
           })),
-          ...workbenches.map((workbench, index) => ({
-            id: `workbench-${index}`,
-            resourceName: workbench,
-            type: "верстат",
+          ...workbenches.map((workbench) => ({
+            id: workbench.id,
+            resourceName: workbench.name,
+            type: workbench.type || "верстат", // додавання захисту
           })),
         ]
     }
