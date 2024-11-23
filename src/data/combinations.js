@@ -67,7 +67,7 @@ const combinations = [
   // виготовлення молотка
   {
     materials: ["Камінь", "Дерево"],
-    technologies: ["Кування"],
+    technologies: ["Кручення"],
     result: "Молоток",
     type: "інструмент",
     createdByUser: false,
@@ -80,6 +80,15 @@ const combinations = [
     materials: ["Камінь", "Дерево"],
     technologies: ["Різання", "Кування"],
     result: "Сокира",
+    type: "інструмент",
+    createdByUser: false,
+    description:
+      "Сокира використовується для різання деревини, лісозаготівлі та обробки дерев.",
+  },
+  {
+    materials: ["Камінь"],
+    technologies: ["Різання"],
+    result: "Тест",
     type: "інструмент",
     createdByUser: false,
     description:

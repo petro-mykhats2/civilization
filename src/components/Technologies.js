@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import "../styles/technologies.scss"
+import MultipleSelect from "./MultipleSelect"
 
 const Technologies = () => {
   const [checked, setChecked] = useState(false)
@@ -52,6 +53,7 @@ const Technologies = () => {
           </tr>
         </tbody>
       </table>
+      <MultipleSelect />
 
       <div className="pagination">
         <button onClick={() => console.log("Go to previous")}>

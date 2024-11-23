@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux"
-import MultipleSelect from "./MultipleSelect"
 
 const MaterialsContainer = () => {
   const [filter, setFilter] = useState("всі")
@@ -43,21 +42,21 @@ const MaterialsContainer = () => {
         filtered = technologies.map((tech) => ({
           id: tech.id,
           resourceName: tech.name,
-          type: tech.type || "технологія", // додавання захисту
+          type: tech.type || "технологія",
         }))
         break
       case "інструменти":
         filtered = tools.map((tool) => ({
           id: tool.id,
           resourceName: tool.name,
-          type: tool.type || "інструмент", // додавання захисту
+          type: tool.type || "інструмент",
         }))
         break
       case "верстати":
         filtered = workbenches.map((workbench) => ({
           id: workbench.id,
           resourceName: workbench.name,
-          type: workbench.type || "верстат", // додавання захисту
+          type: workbench.type || "верстат",
         }))
         break
       default:
@@ -66,22 +65,22 @@ const MaterialsContainer = () => {
           ...technologies.map((tech) => ({
             id: tech.id,
             resourceName: tech.name,
-            type: tech.type || "технологія", // додавання захисту
+            type: tech.type || "технологія",
           })),
           ...tools.map((tool) => ({
             id: tool.id,
             resourceName: tool.name,
-            type: tool.type || "інструмент", // додавання захисту
+            type: tool.type || "інструмент",
           })),
           ...workbenches.map((workbench) => ({
             id: workbench.id,
             resourceName: workbench.name,
-            type: workbench.type || "верстат", // додавання захисту
+            type: workbench.type || "верстат",
           })),
         ]
     }
 
-    // Фільтруємо за пошуковим запитом
+    console.log("Filtered items:", filtered) // Додано лог тут
     return filtered.filter((item) =>
       item.resourceName.toLowerCase().includes(searchQuery.toLowerCase())
     )
@@ -110,8 +109,6 @@ const MaterialsContainer = () => {
         </div>
       </div>
 
-      <MultipleSelect />
-
       <table>
         <thead>
           <tr className="thead">
@@ -124,7 +121,6 @@ const MaterialsContainer = () => {
         <tbody className="tbody">
           {filteredItems().length > 0 ? (
             filteredItems().map((item) => (
-              // Combine id and type to ensure unique keys
               <tr key={`${item.id}-${item.type}`}>
                 <td className="container">
                   <span className="item_title">{item.resourceName}</span>
