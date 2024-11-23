@@ -124,7 +124,7 @@ const MaterialsContainer = () => {
         <tbody className="tbody">
           {filteredItems().length > 0 ? (
             filteredItems().map((item) => (
-              <tr key={item.id}>
+              <tr key={`${item.id}-${item.type}`}>
                 <td className="container">
                   <span className="item_title">{item.resourceName}</span>
                 </td>
